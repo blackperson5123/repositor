@@ -31,3 +31,14 @@ if (sign == "+")
     ans = a + b;
     Console.WriteLine(ans);
 }
+
+if (sign == "*")
+{
+    Console.WriteLine("Умножение: Введите 1 и второе число")
+    a = int.Parse(Console.ReadLine());
+    b = int.Parse(Console.ReadLine());
+
+
+    ans = a * b;
+    Console.WriteLine(ans);
+}
