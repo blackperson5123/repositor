@@ -1,30 +1,12 @@
-// Калькулятор - основная реализация
+int a;
+int b;
+int ans;
 
-class Calculator {
-    constructor() {
-        this.result = 0;
-    }
 
-    // Сложение
-    add(a, b) {
-        this.result = a + b;
-        return this.result;
-    }
 
-    // Вспомогательная функция проверки
-    isValidNumber(num) {
-        return typeof num === 'number' && !isNaN(num);
-    }
+Console.WriteLine("Вычитание: Введите 1 и второе число")
+a = int.Parse(Console.ReadLine());
+b = int.Parse(Console.ReadLine());
 
-    // Получить результат
-    getResult() {
-        return this.result;
-    }
 
-    // Сброс результата
-    reset() {
-        this.result = 0;
-    }
-}
-
-module.exports = Calculator;
+ans = a - b;
