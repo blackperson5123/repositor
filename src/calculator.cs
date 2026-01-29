@@ -33,6 +33,15 @@ if (sign == "+")
     Console.WriteLine(ans);
 }
 
+if (sign == "*")
+{
+    Console.WriteLine("Умножение: Введите 1 и второе число")
+    a = int.Parse(Console.ReadLine());
+    b = int.Parse(Console.ReadLine());
+
+
+    ans = a * b;
+    Console.WriteLine(ans);
 if (sign == "/")
 {
     Console.WriteLine("Деление: Введите 1 и 2 число ")
@@ -40,12 +49,12 @@ if (sign == "/")
     b = int.Parse(Console.ReadLine());
     if(a == 0)
     {
-        Console.WriteLine("Не может быть нулем, введите заного")
+        Console.WriteLine("Не может быть нулем, введите зано7о")
         a = int.Parse(Console.ReadLine());
     }
     if (b == 0)
     {
-        Console.WriteLine("Не может быть нулем, введите заного")
+        Console.WriteLine("Не может быть нулем, введите зано1о")
         b = int.Parse(Console.ReadLine());
     }
     ans2 = a / b;
