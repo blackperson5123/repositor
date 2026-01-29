@@ -10,3 +10,4 @@ b = int.Parse(Console.ReadLine());
 
 
 ans = a - b;
+console.Writeline("Ответ:" + ans)
