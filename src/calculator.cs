@@ -1,6 +1,7 @@
 int a;
 int b;
 int ans;
+double ans2;
 string sign;
 
 
@@ -30,4 +31,23 @@ if (sign == "+")
 
     ans = a + b;
     Console.WriteLine(ans);
+}
+
+if (sign == "/")
+{
+    Console.WriteLine("Деление: Введите 1 и 2 число ")
+    a = int.Parse(Console.ReadLine());
+    b = int.Parse(Console.ReadLine());
+    if(a == 0)
+    {
+        Console.WriteLine("Не может быть нулем, введите заного")
+        a = int.Parse(Console.ReadLine());
+    }
+    if (b == 0)
+    {
+        Console.WriteLine("Не может быть нулем, введите заного")
+        b = int.Parse(Console.ReadLine());
+    }
+    ans2 = a / b;
+    Console.WriteLine(ans2);
 }
