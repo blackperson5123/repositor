@@ -1,3 +1,17 @@
+// Фантомная проверка на буквы
+
+
+
+
+
+
+
+
+
+
+
+
+
 int a;
 int b;
 int ans;
@@ -13,7 +27,7 @@ sign = Console.ReadLine();
 
 if (sign == "-")
 {
-    Console.WriteLine("Вычитание: Введите 1 и второе число")
+    Console.WriteLine("Вычитание: Введите 1 и второе число");
     a = int.Parse(Console.ReadLine());
     b = int.Parse(Console.ReadLine());
 
@@ -24,7 +38,7 @@ if (sign == "-")
 
 if (sign == "+")
 {
-    Console.WriteLine("Сложение: Введите 1 и второе число")
+    Console.WriteLine("Сложение: Введите 1 и второе число");
     a = int.Parse(Console.ReadLine());
     b = int.Parse(Console.ReadLine());
 
@@ -33,21 +47,31 @@ if (sign == "+")
     Console.WriteLine(ans);
 }
 
-if (sign == "/")
+if (sign == "*")
 {
-    Console.WriteLine("Деление: Введите 1 и 2 число ")
+    Console.WriteLine("Умножение: Введите 1 и второе число");
     a = int.Parse(Console.ReadLine());
     b = int.Parse(Console.ReadLine());
-    if(a == 0)
+
+
+    ans = a * b;
+    Console.WriteLine(ans);
+    if (sign == "/")
     {
-        Console.WriteLine("Не может быть нулем, введите заного")
+        Console.WriteLine("Деление: Введите 1 и 2 число ");
         a = int.Parse(Console.ReadLine());
-    }
-    if (b == 0)
-    {
-        Console.WriteLine("Не может быть нулем, введите заного")
         b = int.Parse(Console.ReadLine());
+        if (a == 0)
+        {
+            Console.WriteLine("Не может быть нулем, введите зано7о");
+            a = int.Parse(Console.ReadLine());
+        }
+        if (b == 0)
+        {
+            Console.WriteLine("Не может быть нулем, введите зано1о");
+            b = int.Parse(Console.ReadLine());
+        }
+        ans2 = a / b;
+        Console.WriteLine(ans2);
     }
-    ans2 = a / b;
-    Console.WriteLine(ans2);
 }
