@@ -1,0 +1,87 @@
+name: Update Changelog
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main, master]
+
+permissions:
+  contents: write  # Добавьте это для разрешения записи
+
+jobs:
+  update-changelog:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+    
+    - name: Create changelog entry
+      run: |
+        # Экранируем специальные символы в названии PR
+        PR_TITLE="${{ github.event.pull_request.title }}"
+        # Заменяем кавычки и другие спецсимволы
+        PR_TITLE=$(echo "$PR_TITLE" | sed 's/["`]/\\&/g')
+        
+        PR_NUMBER=${{ github.event.pull_request.number }}
+        PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+        MERGE_DATE=$(date '+%Y-%m-%d')
+        REPO="${{ github.repository }}"
+        
+        # Создаем заголовок для новой записи
+        CHANGELOG_ENTRY="## PR #$PR_NUMBER: $PR_TITLE ($MERGE_DATE)"
+        CHANGELOG_ENTRY+="\n- **Ссылка:** [Просмотреть PR](https://github.com/$REPO/pull/$PR_NUMBER)"
+        CHANGELOG_ENTRY+="\n- **Автор:** @$PR_AUTHOR"
+        CHANGELOG_ENTRY+="\n- **Мерж:** $MERGE_DATE"
+        CHANGELOG_ENTRY+="\n\n"
+        
+        # Создаем временный файл с новой записью
+        echo "$CHANGELOG_ENTRY" > /tmp/new_entry.md
+        
+        # Проверяем, существует ли CHANGELOG.md
+        if [ -f "CHANGELOG.md" ]; then
+          # Добавляем новую запись в начало файла
+          cat /tmp/new_entry.md CHANGELOG.md > /tmp/combined.md
+          mv /tmp/combined.md CHANGELOG.md
+        else
+          # Создаем новый файл с заголовком
+          echo "# Changelog\n\n" > CHANGELOG.md
+          cat /tmp/new_entry.md >> CHANGELOG.md
+        fi
+        
+        # Показываем, что было добавлено
+        echo "Добавлено в CHANGELOG.md:"
+        cat /tmp/new_entry.md
+    
+    - name: Commit and push changes
+      run: |
+        # Проверяем, есть ли изменения
+        if git diff --quiet CHANGELOG.md; then
+          echo "Нет изменений для коммита"
+          exit 0
+        fi
+        
+        # Создаем коммит
+        git add CHANGELOG.md
+        git commit -m "📝 docs: обновлен changelog для PR #${{ github.event.pull_request.number }}"
+        
+        # Пытаемся запушить с несколькими попытками
+        for i in {1..3}; do
+          if git push; then
+            echo "Успешно запушили изменения"
+            break
+          else
+            echo "Попытка $i не удалась, пробуем снова..."
+            git pull --rebase origin ${{ github.base_ref }}
+            sleep 2
+          fi
+        done
